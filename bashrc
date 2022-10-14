@@ -29,12 +29,17 @@ export PATH=$PATH:$HOME/.local/bin/
 
 #   export PS1="\[\e]0;\u@\h: \w\a\]\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\h \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]"
 
+
+source ~/.bash/fixedwith.sh
 PROMPT_COMMAND='make_prompt'
 make_prompt () {
-    PS1="\n\[\033[1;32m\]┌[\[\033[00m\] $(~/.bash/battery.bash) \[\033[1;32m\]|\[\033[00m\] $(~/.bash/git.bash) \[\033[1;32m\]|\[\033[00m\] $($EDITOR --version | head -1) \[\033[1;32m\]|\[\033[00m\] \# \[\033[1;32m\]]\[\033[00m\]"
-   PS1+="\n\[\033[1;32m\]╞[\[\033[00m\] \[\033[01;36m\]\h \[\033[1;32m\]|\[\033[00m\] \033[01;31m\]\u \[\033[1;32m\]|\[\033[00m\] \[\033[01;33m\]\w \[\033[1;32m\]]\[\033[00m\]"
-   PS1+="\n\[\033[1;32m\]└\[\033[00m\] \[\033[01;35m\]\$ \[\033[00m\]"
+    local lastexit=$?
+    PS1="\n\[\033[1;32m\]┌[\[\033[00m\] "$(~/.bash/battery.bash 12)" \[\033[1;32m\]|\[\033[00m\] $(fixed_width "$(~/.bash/git.bash)" 12) \[\033[1;32m\]|\[\033[00m\] $( fixed_width "$($EDITOR --version | head -1)" 12) \[\033[1;32m\]|\[\033[00m\] $(fixed_width "$lastexit" 6) \[\033[1;32m\]]\[\033[00m\]"
+    PS1+="\n\[\033[1;32m\]╞[\[\033[00m\] \[\033[01;36m\]$( fixed_width $HOSTNAME 12) \[\033[1;32m\]|\[\033[00m\]\033[01;31m\] $(fixed_width "$USER" 12) \[\033[1;32m\]|\[\033[00m\] $( fixed_width "$(uname -m)" 12) \[\033[1;32m\]|\[\033[00m\] $(fixed_width "$(jobs | wc -l)" 6) \[\033[1;32m\]]\[\033[00m\]"
+    PS1+="\n\[\033[1;32m\]╞> \[\033[01;33m\]\w\[\033[00m\]"
+    PS1+="\n\[\033[1;32m\]└\[\033[00m\] \[\033[01;35m\]\$ \[\033[00m\]"
 }
 
 
 alias lab="jupyter-lab"
+alias kernlogin="$HOME/informatics/external/cool-retro-term/cool-retro-term --fullscreen -e ssh knd35666@kern-login-002.ur.de"
