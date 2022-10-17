@@ -37,4 +37,3 @@ make_prompt () {
 
 
 alias lab="jupyter-lab"
-alias kernlogin="$HOME/informatics/external/cool-retro-term/cool-retro-term --fullscreen -e ssh knd35666@kern-login-002.ur.de"
