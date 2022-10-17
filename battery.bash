@@ -8,7 +8,7 @@ source ~/.bash/fixedwith.sh
 if [ -e $BATTERY_DIR ]
 then
     PERCENT=$(cat $BATTERY_DIR/capacity)
-    if grep -q Charging $BATTERY_DIR/status
+    if grep -q "Charging\|Full" $BATTERY_DIR/status 
     then
         echo "$(fixed_width "↯  $PERCENT%" $1)"
     else
